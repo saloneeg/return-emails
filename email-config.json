@@ -1,0 +1,149 @@
+{
+  "returnEmails": {
+    "dxPickup": {
+      "confirmation": {
+        "template": "return-confirmation-dx-pickup.html",
+        "triggerEvent": "RETURN_REQUEST_CONFIRMED_DX_PICKUP",
+        "subject": "{merchantName} Return Request Confirmation",
+        "heading": "We got your return request",
+        "ctaText": "Track your return",
+        "ctaUrl": "https://www.doordash.com/returns/track",
+        "requiredData": [
+          "customerName",
+          "merchantName",
+          "refundAmount",
+          "paymentMethod",
+          "items",
+          "returnPolicyUrl"
+        ]
+      },
+      "complete": {
+        "template": "return-complete-dx-pickup.html",
+        "triggerEvent": "RETURN_PICKED_UP_BY_DASHER",
+        "subject": "{merchantName} return complete",
+        "heading": "Your return is complete",
+        "ctaText": "View return details",
+        "ctaUrl": "https://www.doordash.com/orders/return-details",
+        "requiredData": [
+          "customerName",
+          "merchantName",
+          "refundAmount",
+          "paymentMethod",
+          "items"
+        ],
+        "bodyText": "Your return has been completed and your refund is on the way. It usually takes 4-7 business days to appear in your account, depending on your financial institution."
+      }
+    },
+    "inStore": {
+      "confirmation": {
+        "template": "return-confirmation-in-store.html",
+        "triggerEvent": "RETURN_REQUEST_CONFIRMED_IN_STORE",
+        "subject": "{merchantName} in-store return request",
+        "heading": "We got your return request",
+        "ctaText": "Track your return",
+        "ctaUrl": "https://www.doordash.com/returns/track",
+        "requiredData": [
+          "customerName",
+          "merchantName",
+          "refundAmount",
+          "paymentMethod",
+          "items",
+          "dropoffDeadline",
+          "returnPolicyUrl"
+        ],
+        "bodyText": "We've received your return request. Please drop off your item(s) at the store to complete your return by {dropoffDeadline} at any {merchantName} convenient for you. Before you go: Please review {merchantName}'s return policy to ensure your items meet return requirements."
+      },
+      "received": {
+        "template": "return-complete-in-store.html",
+        "triggerEvent": "MERCHANT_RECEIVED_RETURN",
+        "subject": "{merchantName} has your return",
+        "heading": "Sephora has your return",
+        "ctaText": "Track your return",
+        "ctaUrl": "https://www.doordash.com/returns/track",
+        "requiredData": [
+          "customerName",
+          "merchantName",
+          "refundAmount",
+          "paymentMethod",
+          "items"
+        ],
+        "bodyText": "We're processing your return. You'll receive an update once your refund is on the way."
+      },
+      "refundApproved": {
+        "template": "refund-on-the-way-in-store.html",
+        "triggerEvent": "REFUND_APPROVED",
+        "subject": "{merchantName} return complete",
+        "heading": "Your return is complete",
+        "ctaText": "View return details",
+        "ctaUrl": "https://www.doordash.com/returns/track",
+        "requiredData": [
+          "customerName",
+          "merchantName",
+          "refundAmount",
+          "paymentMethod",
+          "items"
+        ],
+        "bodyText": "Your return has been processed and your refund is on the way. It usually takes 4-7 business days to appear in your account, depending on your financial institution."
+      }
+    }
+  },
+  "dataSchema": {
+    "customerName": {
+      "type": "string",
+      "description": "Customer first name",
+      "example": "Salonee"
+    },
+    "merchantName": {
+      "type": "string",
+      "description": "Merchant display name",
+      "example": "Sephora"
+    },
+    "refundAmount": {
+      "type": "string",
+      "description": "Formatted refund amount with currency",
+      "example": "$34.99"
+    },
+    "paymentMethod": {
+      "type": "string",
+      "description": "Payment method with last 4 digits",
+      "example": "Visa ****1234"
+    },
+    "items": {
+      "type": "array",
+      "description": "Array of returned items",
+      "schema": {
+        "name": "string (Product name)",
+        "variant": "string (Color, size, or other variant details)",
+        "quantity": "number",
+        "price": "string (Formatted price)",
+        "imageUrl": "string (Product image URL)"
+      },
+      "example": [
+        {
+          "name": "NARS Radiant Chantilly Creamy Concealer (0.22 oz)",
+          "variant": "Color: Madeleine - L2.3",
+          "quantity": 1,
+          "price": "$34.99",
+          "imageUrl": "https://via.placeholder.com/80x80"
+        }
+      ]
+    },
+    "dropoffDeadline": {
+      "type": "string",
+      "description": "Formatted deadline date for in-store drop-off",
+      "example": "3/12/2026",
+      "requiredFor": ["inStore.confirmation"]
+    },
+    "returnPolicyUrl": {
+      "type": "string",
+      "description": "Merchant's return policy URL",
+      "example": "https://www.sephora.com/returns",
+      "requiredFor": ["dxPickup.confirmation", "inStore.confirmation"]
+    }
+  },
+  "helpLinks": {
+    "viewReturnDetails": "https://www.doordash.com/orders/return-details",
+    "getReturnHelp": "https://www.doordash.com/help",
+    "trackReturn": "https://www.doordash.com/returns/track"
+  }
+}
